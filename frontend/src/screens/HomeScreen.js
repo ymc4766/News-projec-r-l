@@ -204,6 +204,7 @@ const HomeScreen = () => {
           {fetchPosts?.map((post) => (
             <Post
               key={post._id}
+              postId={post._id}
               title={post.title}
               description={post.description}
               imageUrl={post.image}
@@ -211,7 +212,7 @@ const HomeScreen = () => {
               likes={post?.likes?.length}
               disLikes={post?.disLikes?.length}
               createdAt={post.createdAt}
-              views={post.numViews.length}
+              views={post?.numViews?.length}
               addPostLikeHandler={() => addPostLikeHandler(post._id)}
               addPostDislikeHandler={() => addPostDislikeHandler(post._id)}
             />
@@ -225,7 +226,8 @@ const HomeScreen = () => {
                   <h3 className="text-lg font-bold py-1">Top Stories</h3>
                   {topPosts?.map((post, index) => (
                     <TopStory
-                      key={index}
+                      key={post._id}
+                      postId={post._id}
                       image={post.image}
                       title={post?.title}
                       timestamp={

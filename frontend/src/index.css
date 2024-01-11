@@ -42,3 +42,23 @@
   position: sticky;
   top: 80px; /* Adjust the top value as needed */
 }
+.convos {
+  height: calc(100vh - 220px);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/*----Custom scrollbar----*/
+/*--Width--*/
+.scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+/*--T
+  /*--Track--*/
+.scrollbar::-webkit-scrollbar-track {
+  background: #888;
+}
+/*--Thumb--*/
+.scrollbar::-webkit-scrollbar-thumb {
+  background: #444e54;
+}

@@ -21,8 +21,8 @@ export const getCategoriesService = async () => {
   return response.data;
 };
 
-export const addLikePostService = async (postId) => {
-  const response = await axios.put(`${POSTS_URL}/post/like/${postId}`);
+export const addLikePostService = async (id) => {
+  const response = await axios.put(`${POSTS_URL}/post/like/${id}`);
   return response.data;
 };
 export const addDisLikePostService = async (postId) => {

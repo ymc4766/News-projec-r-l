@@ -15,7 +15,7 @@ router
   .route("/")
   .post(protect, upload.single("image"), createPost)
   .get(protect, allposts);
-router.route("/:id").get(getPost);
+router.route("/:id").get(protect, getPost);
 router.route("/post/like/:id").put(protect, toggleAddLikePostCtrl);
 router.route("/post/dislike/:id").put(protect, toggleAddDislikeToPostCtrl);
 

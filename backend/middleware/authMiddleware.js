@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import User from "../models/userModel.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
+import ErrorHandler from "../utils/errorHandler.js";
 
 export const protect = asyncHandler(async (req, res, next) => {
   let token;
@@ -33,4 +34,10 @@ export const admin = (req, res, next) => {
     res.status(401);
     throw new Error("Not Authorized , No Clearence");
   }
+};
+
+export const findUser = async (userId) => {
+  const user = await User.findById(userId);
+  if (!user) return next(new ErrorHandler("Please fill all the form", 400));
+  return user;
 };

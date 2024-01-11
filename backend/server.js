@@ -21,6 +21,9 @@ import cors from "cors";
 import userRoutes from "./routes/userRoutes.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
 import postRoutes from "./routes/postRoutes.js";
+import conversationRoutes from "./routes/conversationRoutes.js";
+
+import messageRoutes from "./routes/messageRoutes.js";
 
 import cookieParser from "cookie-parser";
 import { errorHandler, handleNotFound } from "./middleware/errorHandler.js";
@@ -55,6 +58,8 @@ app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
 
 app.use("/api/category", categoryRoutes);
+app.use("/api", conversationRoutes);
+app.use("/api", messageRoutes);
 
 const __dirname = path.resolve();
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));

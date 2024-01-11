@@ -17,6 +17,7 @@ const initialState = {
   posts: [],
   likes: [],
   disLikes: [],
+  numViews: [],
   isError: false,
   isSuccess: false,
   isLoading: false,
@@ -62,7 +63,7 @@ export const getPosts = createAsyncThunk(
   }
 );
 export const getPostDet = createAsyncThunk(
-  "product/detail",
+  "post/detail",
   async (id, thunkAPI) => {
     try {
       return await getPostDetDet(id);
@@ -79,23 +80,18 @@ export const getPostDet = createAsyncThunk(
   }
 );
 
-export const likePost = createAsyncThunk(
-  "post/like",
-  async (postId, thunkAPI) => {
-    try {
-      return await addLikePostService(postId);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      console.log(message);
-      return thunkAPI.rejectWithValue(message);
-    }
+export const likePost = createAsyncThunk("post/like", async (id, thunkAPI) => {
+  try {
+    return await addLikePostService(id);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    console.log(message);
+    return thunkAPI.rejectWithValue(message);
   }
-);
+});
 
 export const disLikePost = createAsyncThunk(
   "post/dislike",
@@ -122,6 +118,23 @@ const postSlice = createSlice({
     setPostLikes: (state, action) => {
       const { postId, likes } = action.payload;
       state.likes[postId] = likes;
+    },
+    setPostDetails: (state, action) => {
+      // Check if the user has already viewed the post
+      const { post } = action.payload;
+
+      const hasViewed =
+        state.post?.numViews && Array.isArray(state?.post?.numViews)
+          ? state?.post?.numViews.some((userId) => userId === post.user._id)
+          : false;
+
+      if (!hasViewed) {
+        // Update numViews only if the user hasn't viewed the post before
+        state.post = {
+          ...post,
+          numViews: [...post?.numViews, post.user._id],
+        };
+      }
     },
   },
   extraReducers: (builder) => {
@@ -221,5 +234,5 @@ const postSlice = createSlice({
   },
 });
 
-export const { setPostLikes } = postSlice.actions;
+export const { setPostLikes, setPostDetails } = postSlice.actions;
 export default postSlice.reducer;

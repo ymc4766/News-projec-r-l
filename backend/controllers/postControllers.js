@@ -92,24 +92,25 @@ export const allposts = asyncHandler(async (req, res) => {
 });
 
 export const getPost = asyncHandler(async (req, res) => {
-  const { id } = req.params;
-  const userId = req.user && req.user._id;
+  const postId = req.params.id;
+  const userId = req.user.id;
 
-  // Increment numViews when retrieving the post details
-  const updatedPost = await Post.findByIdAndUpdate(
-    id,
-    {
-      $addToSet: { views: userId }, // Add the user to the views array
-      $inc: { numViews: 1 }, // Increment the numViews field by 1
-    },
-    { new: true }
-  );
-
-  if (updatedPost) {
-    res.status(200).json(updatedPost);
-  } else {
-    res.status(404).json({ success: false, message: "Post not found" });
+  // Check if the user has already viewed the post
+  const post = await Post.findById(postId).populate("user");
+  if (!post) {
+    return res.status(404).json({ success: false, message: "Post not found" });
   }
+
+  // Check if the user has already viewed the post
+  const alreadyViewed = post.views.includes(userId);
+  if (!alreadyViewed) {
+    // User hasn't viewed the post yet, update views
+    post.views.push(userId);
+    post.numViews = post.views.length;
+    await post.save();
+  }
+
+  res.status(200).json(post);
 });
 
 export const toggleAddLikePostCtrl = asyncHandler(async (req, res) => {

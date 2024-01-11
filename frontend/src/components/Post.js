@@ -3,6 +3,7 @@ import { FaThumbsUp, FaThumbsDown, FaEye, FaComment } from "react-icons/fa";
 
 import moment from "moment";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 // Post component for individual posts
 const Post = ({
   postId,
@@ -37,6 +38,7 @@ const Post = ({
             alt={title}
             className="w-12 h-12 object-cover rounded-full"
           />
+
           <div>
             <p className="text-sm text-gray-600">{author}</p>
             <p className="text-sm mb-[2px] text-slate-400">
@@ -46,13 +48,16 @@ const Post = ({
         </div>{" "}
         <button className="px-3 p-2 bg-blue-600 rounded-2xl">Follow</button>
       </div>
-
-      <img
-        src={imageUrl}
-        alt={title}
-        className="mb-2 w-full h-[400px] object-cover"
-      />
-      <h2 className="text-xl font-bold mb-2">{title}</h2>
+      <Link to={`/post/${postId}`}>
+        <img
+          src={imageUrl}
+          alt={title}
+          className="mb-2 w-full h-[400px] object-cover"
+        />
+      </Link>
+      <h2 className="text-xl font-bold mb-2 hover:underline cursor-pointer">
+        <Link to={`/post/${postId}`}> {title}</Link>
+      </h2>
       <p>{description}</p>
 
       {/* Comment input */}
@@ -93,7 +98,7 @@ const Post = ({
         </div>
         <div className="flex items-center space-x-1 cursor-pointer">
           <FaEye className="text-green-500" />
-          <span className="text-gray-600">{views}</span>
+          <span className="text-gray-600">{views ? views : 0}</span>
         </div>
         {/* Comment toggle button */}
         <div
