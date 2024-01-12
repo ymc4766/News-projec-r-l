@@ -1,5 +1,6 @@
 import moment from "moment";
 import React from "react";
+import { dateHandler } from "../utils/dateHandler";
 
 const Conversation = ({ convo }) => {
   return (
@@ -23,12 +24,12 @@ const Conversation = ({ convo }) => {
           {/* conversation name and pic / */}
           <div className="w-full flex  flex-col">
             {/* conversation name ..  */}
-            <h1 className="font-bold  flex items-center  gap-x-2">
+            <h1 className="font-bold  flex items-center  gap-x-2 text-slate-400">
               {convo.name}
             </h1>
             {/* conversation message */}
             <div className="">
-              <div className="flex items-center  gap-x-1  dark:text-dark_bg_2">
+              <div className="flex items-center  gap-x-1  dark:text-slate-100">
                 <div className="flex-1 items-center gap-x-1  dark:text-slate-500">
                   <p>
                     {convo.latestMessage?.message.length > 25
@@ -45,7 +46,7 @@ const Conversation = ({ convo }) => {
         <div className="flex  flex-col gap-y-4  items-end  text-xs">
           <span className="dark:text-slate-600">
             {convo.latestMessage?.createdAt &&
-              moment(convo.latestMessage?.createdAt).fromNow()}
+              moment(convo.latestMessage?.createdAt).fromNow(true)}
           </span>
         </div>
       </div>

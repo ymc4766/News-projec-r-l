@@ -1,4 +1,8 @@
+import logger from "../config/logger.js";
 import User from "../models/userModel.js";
+
+import { searchUserService } from "../services/userServices.js";
+import createHttpError from "http-errors";
 
 import { asyncHandler } from "../utils/asyncHandler.js";
 import generateToken from "../utils/generateToken.js";
@@ -164,4 +168,19 @@ export const updateUserClr = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error("User not found");
   }
+});
+
+export const searchUsers = asyncHandler(async (req, res, next) => {
+  try {
+    const keyword = req.query.search;
+    // res.send("search user");
+
+    if (!keyword) {
+      logger.error("please add search query");
+      throw createHttpError.BadRequest("please add a name to search ");
+    }
+
+    const users = await searchUserService(keyword, req.user.userId);
+    res.status(200).json(users);
+  } catch (error) {}
 });

@@ -25,9 +25,9 @@ const userSchema = mongoose.Schema(
       type: String,
       default: "Hey there ! I on defs",
     },
-    photo: {
+    picture: {
       type: String,
-      default: "",
+      default: "https://cdn-icons-png.flaticon.com/512/147/147142.png",
     },
     bio: {
       type: String,

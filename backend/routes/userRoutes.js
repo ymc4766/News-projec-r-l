@@ -8,6 +8,7 @@ import {
   loginStatus,
   logoutUser,
   register,
+  searchUsers,
   updateUserClr,
   updateUserProfile,
 } from "../controllers/userControllers.js";
@@ -18,6 +19,7 @@ const router = express.Router();
 router.post("/", trimRequest.all, register);
 router.post("/login", trimRequest.all, authUser);
 router.get("/", allusers);
+router.route("/user/search").get(trimRequest.all, protect, searchUsers);
 
 router.get("/logout", protect, logoutUser);
 router.get("/mine", protect, getUserProfile);
