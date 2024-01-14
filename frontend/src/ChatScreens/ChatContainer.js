@@ -28,7 +28,11 @@ function ChatContainer({ onClose, socket }) {
       dispatch(updateMessages(message));
       dispatch(getConversationMessage(values));
     });
-  }, [dispatch]);
+    // return () => {
+    //   // Cleanup the socket listener when the component unmounts
+    //   socket.off("messageRecieve");
+    // };
+  }, [dispatch, socket, values]);
 
   return (
     <div className="relative w-full h-full border-l dark:border-l-dark_border_2 select-none overflow-hidden ">
