@@ -1,7 +1,11 @@
 import React from "react";
 import Contact from "./Contact";
 
-const SearchResults = ({ searchResults, setSearchResults }) => {
+const SearchResults = ({
+  searchResults,
+  setSearchResults,
+  setIsChatScreenVisible,
+}) => {
   return (
     <div className="w-full convos scrollbar">
       <div>
@@ -18,6 +22,7 @@ const SearchResults = ({ searchResults, setSearchResults }) => {
                 contact={user}
                 key={user._id}
                 setSearchResults={setSearchResults}
+                setIsChatScreenVisible={setIsChatScreenVisible}
               />
             ))}
         </ul>

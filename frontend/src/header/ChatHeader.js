@@ -9,7 +9,7 @@ const ChatHeader = () => {
   const { userInfo } = useSelector((state) => state.auth);
   const [showMenu, setShowMenu] = useState(false);
   return (
-    <div className="h-[50px] dark:bg-dark_bg_2 flex items-center p16 px-3 m-3">
+    <div className=" h-[50px] dark:bg-dark_bg_2 flex items-center p16 px-3 m-3">
       {/* container */}
       <div className="w-full flex items-center justify-between">
         <button className="btn">

@@ -28,6 +28,17 @@
   .rotateAnimation {
     animation: rotate 0.3s forwards;
   }
+  .overflow_scrollbar {
+    height: calc(100vh - 155px);
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  .custom-emoji-icon {
+    color: #864af9;
+  }
+  .emojiPickerAnimation {
+    animation: openAn 0.1s forwards;
+  }
 }
 
 ::-webkit-scrollbar {
@@ -89,4 +100,50 @@
 /*--Thumb--*/
 .scrollbar::-webkit-scrollbar-thumb {
   background: #444e54;
+}
+
+.epr-search-container input {
+  background: #222e35 !important;
+  border-radius: 0 !important;
+  border: none !important;
+  font-size: 13px;
+}
+.epr-preview {
+  display: none !important;
+}
+.epr-emoji-category-label {
+  background: transparent !important;
+  font-size: 15px;
+  font-weight: normal !important;
+}
+/*--- Emoji Scroollbar
+  /* width */
+.epr-body::-webkit-scrollbar {
+  width: 6px !important;
+}
+
+/* Track */
+.epr-body::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+/* Handle */
+.epr-body::-webkit-scrollbar-thumb {
+  background: #4d5052 !important;
+}
+.epr-category-nav {
+  padding: 10px 0 !important;
+}
+.epr-category-nav .epr-active::after {
+  content: "";
+  width: 140px;
+  height: 4px;
+  background: #00a884;
+  position: absolute;
+  bottom: -10px;
+  left: -55px;
+}
+.epr-header {
+  display: flex;
+  flex-direction: column-reverse;
 }

@@ -1,24 +1,34 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { open_create_conversations } from "../redux/chatSlice";
+import SocketContext from "../Context/SocketContext";
 // import { getConversationId } from "../utils/chat";
 // import { open_create_conversations } from "../redux/chatSlice";
 // import SocketContext from "../context/SocketContext";
 
-function Contact({ contact, setSearchResults, socket }) {
+function Contact({
+  contact,
+  setIsChatScreenVisible,
+  socket,
+  setSearchResults,
+}) {
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.auth);
+  const { token } = userInfo;
   const values = {
     receiver_id: contact._id,
+    token,
   };
-  //   const openConversation = () => {
-  //     let newConvo = dispatch(open_create_conversations(values));
-  //     socket.emit("join_conversation", newConvo.payload._id);
-  //     // setSearchResults([]);
-  //   };
+  const openConversation = async () => {
+    let newConvo = await dispatch(open_create_conversations(values));
+    // navigate(`/friends/chatscreen`);
+    setIsChatScreenVisible(true);
+    socket.emit("joinConvoRoom", newConvo.payload?._id);
+  };
 
   return (
     <li
-      //   onClick={() => openConversation()}
+      onClick={() => openConversation()}
       className="list-none h-[72px] hover:dark:bg-dark_bg_2 cursor-pointer dark:text-dark_text_1 px-[10px]"
     >
       {/*Container*/}
@@ -56,9 +66,9 @@ function Contact({ contact, setSearchResults, socket }) {
   );
 }
 
-// const ContactContext = (props) => {
-//   <SocketContext.Consumer>
-//     {(socket) => <Contact {...props} socket={socket} />}
-//   </SocketContext.Consumer>;
-// };
-export default Contact;
+const ContactWithContext = (props) => (
+  <SocketContext.Consumer>
+    {(socket) => <Contact {...props} socket={socket} />}
+  </SocketContext.Consumer>
+);
+export default ContactWithContext;
