@@ -17,6 +17,7 @@ process.on("uncaughtException", (err) => {
 import "dotenv/config";
 
 import cors from "cors";
+import { Server } from "socket.io";
 
 import userRoutes from "./routes/userRoutes.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
@@ -27,6 +28,8 @@ import messageRoutes from "./routes/messageRoutes.js";
 
 import cookieParser from "cookie-parser";
 import { errorHandler, handleNotFound } from "./middleware/errorHandler.js";
+import logger from "./config/logger.js";
+import SocketServer from "./SocketServer.js";
 
 const app = express();
 app.use((req, res, next) => {
@@ -70,7 +73,23 @@ app.use("/*", handleNotFound);
 // app.use(serverError);
 app.use(errorHandler);
 
-app.listen(port, console.log(`app is running on ${port} port`));
+let server;
+
+server = app.listen(port, console.log(`app is running on ${port} port`));
+
+// socket io
+
+const io = new Server(server, {
+  pingTimeout: 60000,
+  cors: {
+    origin: process.env.CLIENT_ENDPOINT,
+  },
+});
+
+io.on("connection", (socket) => {
+  logger.info("socket io connected succesfuly ...");
+  SocketServer(socket);
+});
 
 //Handle Unhandled Promise rejections
 process.on("unhandledRejection", (err) => {

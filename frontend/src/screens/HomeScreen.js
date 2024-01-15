@@ -7,16 +7,17 @@ import Testimonial from "../components/Trending";
 import Loader from "../components/Loader";
 import SocketContext from "../Context/SocketContext";
 import { formatTimestamp } from "../utils/general";
-import { updateMessages } from "../redux/chatSlice";
+import { getConversationMessage, updateMessages } from "../redux/chatSlice";
 
 function Home({ socket }) {
-  console.log("sckthome", socket);
+  // console.log("sckthome", socket);
   const dispatch = useDispatch();
 
   const [topPosts, setTopPosts] = useState([]);
   const [fetchPosts, setFetchPosts] = useState([]);
-  const { userInfo } = useSelector((state) => state.auth);
+  const { activeConversation } = useSelector((state) => state.chat);
 
+  const { userInfo } = useSelector((state) => state.auth);
   const { posts, likes, disLikes, isLoading } = useSelector(
     (state) => state.posts
   );
@@ -45,6 +46,10 @@ function Home({ socket }) {
     dispatch(disLikePost(postId));
   };
 
+  const values = {
+    token: userInfo?.token,
+    convo_id: activeConversation?._id,
+  };
   useEffect(() => {
     socket.emit("join", userInfo?._id);
   }, [userInfo]);
@@ -52,6 +57,14 @@ function Home({ socket }) {
   useEffect(() => {
     dispatch(getPosts());
   }, [dispatch, likes, disLikes]);
+
+  useEffect(() => {
+    socket.on("messageRecieve", (message) => {
+      // console.log("message recice ---- -->", message);
+      dispatch(updateMessages(message));
+      dispatch(getConversationMessage(values));
+    });
+  }, [dispatch]);
 
   if (isLoading) {
     return <Loader />;

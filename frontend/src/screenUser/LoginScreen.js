@@ -139,6 +139,14 @@ const LoginScreen = () => {
                       Login {isLoading && <Loader />}
                     </button>
                   </div>
+                  <div>
+                    <p>
+                      New User{" "}
+                      <Link to="/register">
+                        <button>Register</button>
+                      </Link>
+                    </p>
+                  </div>
                 </form>
               </div>
             </div>

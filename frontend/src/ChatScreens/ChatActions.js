@@ -3,7 +3,7 @@ import Attachments from "./inputActions/Attachments";
 import ChatInput from "./inputActions/ChatInput";
 import { ClipLoader } from "react-spinners";
 import { useDispatch, useSelector } from "react-redux";
-import { sendMessage } from "../redux/chatSlice";
+import { sendMessage, updateMessages } from "../redux/chatSlice";
 import SendIcon from "../svg/Send";
 import EmojiPickers from "./inputActions/EmojiPickers";
 import SocketContext from "../Context/SocketContext";
@@ -33,6 +33,8 @@ function ChatActions({ socket }) {
     setLoading(true);
     let newMsg = await dispatch(sendMessage(values));
     socket.emit("sendMsg", newMsg?.payload);
+    // dispatch(updateMessages(newMsg.payload));
+
     console.log("nwMsg", newMsg);
 
     setMessage("");

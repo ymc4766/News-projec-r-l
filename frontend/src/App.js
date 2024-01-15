@@ -13,10 +13,10 @@ import ChatButton from "./components/ChatButton";
 import CreatePostButton from "./components/TweatButton";
 import Header from "./header/Header";
 import LoginScreen from "./screenUser/LoginScreen";
-import FriendsModal from "./screens/FriendsModal";
 import PostDetails from "./screens/posts/PostDetails";
 import Navigation from "./sidebar/Navigation";
 import { useEffect } from "react";
+import RegisterScreen from "./screenUser/RegisterScreen";
 
 const socket = io(process.env.REACT_APP_API_ENDPOINT);
 
@@ -50,6 +50,7 @@ function App() {
 
             <Route path="/post/:id" exact element={<PostDetails />} />
             <Route path="/login" exact element={<LoginScreen />} />
+            <Route path="/register" exact element={<RegisterScreen />} />
           </Routes>
           <div className="flex items-center space-x-4">
             <CreatePostButton />

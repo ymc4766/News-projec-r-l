@@ -2,6 +2,10 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { open_create_conversations } from "../redux/chatSlice";
 import SocketContext from "../Context/SocketContext";
+import {
+  getConversationName,
+  getConversationPicture,
+} from "../utils/chatWithUser";
 // import { getConversationId } from "../utils/chat";
 // import { open_create_conversations } from "../redux/chatSlice";
 // import SocketContext from "../context/SocketContext";
@@ -23,6 +27,7 @@ function Contact({
     let newConvo = await dispatch(open_create_conversations(values));
     // navigate(`/friends/chatscreen`);
     setIsChatScreenVisible(true);
+
     socket.emit("joinConvoRoom", newConvo.payload?._id);
   };
 

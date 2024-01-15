@@ -13,26 +13,23 @@ function ChatContainer({ onClose, socket }) {
   const { token } = userInfo;
   const values = {
     token,
-    convo_id: activeConversation._id,
+    convo_id: activeConversation?._id,
   };
 
   useEffect(() => {
     if (activeConversation._id) {
       dispatch(getConversationMessage(values));
     }
-  }, [activeConversation]);
+  }, [dispatch, activeConversation]);
 
-  useEffect(() => {
-    socket.on("messageRecieve", (message) => {
-      console.log("message recice ---- -->", message);
-      dispatch(updateMessages(message));
-      dispatch(getConversationMessage(values));
-    });
-    // return () => {
-    //   // Cleanup the socket listener when the component unmounts
-    //   socket.off("messageRecieve");
-    // };
-  }, [dispatch, socket, values]);
+  // useEffect(() => {
+  //   socket.on("messageRecieve", (message) => {
+  //     console.log("message recice ---- -->", message);
+  //     dispatch(updateMessages(message));
+  //     dispatch(getConversationMessage(values));
+  //   });
+
+  // }, [dispatch]);
 
   return (
     <div className="relative w-full h-full border-l dark:border-l-dark_border_2 select-none overflow-hidden ">

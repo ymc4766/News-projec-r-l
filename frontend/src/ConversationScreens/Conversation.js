@@ -25,10 +25,8 @@ function Conversation({ convo, setIsChatScreenVisible, socket }) {
 
   const openConversation = async () => {
     let newConvo = await dispatch(open_create_conversations(values));
-    // navigate(`/friends/chatscreen`);
-    setIsChatScreenVisible(true);
-    console.log("a", newConvo);
     socket.emit("joinConvoRoom", newConvo?.payload?._id);
+    setIsChatScreenVisible(true);
   };
 
   return (
